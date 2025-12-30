@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", async () => {
-  const rifaId = prompt("Ingresa el ID de la rifa activa:");
+  const rifaId = prompt("🔐 Ingresa el ID de la rifa activa:");
 
   const numeroInicio = 1;
   const numeroFin = 100;

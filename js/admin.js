@@ -1,38 +1,73 @@
-import { supabase } from "./supabaseClient.js";
+document.addEventListener("DOMContentLoaded", async () => {
+  await cargarBoletas();
 
-async function cargarAdmin() {
-    const { data } = await supabase
-        .from("boletas")
-        .select("*")
-        .order("numero", { ascending: true });
+  document.getElementById("filtro").addEventListener("change", cargarBoletas);
+});
 
-    const div = document.getElementById("boletas-admin");
-    div.innerHTML = "";
+async function cargarBoletas() {
+  const container = document.getElementById("tabla-boletas");
+  const filtro = document.getElementById("filtro").value;
 
-    data.forEach(b => {
-        const row = document.createElement("div");
-        row.classList.add("fila-admin");
+  let query = supabase.from("boletas").select("*").order("numero", { ascending: true });
 
-        row.innerHTML = `
-            <span>#${b.numero_formateado}</span>
-            <span>${b.estado}</span>
-            <span>${b.comprador_nombre || "N/A"}</span>
-            <button onclick="pagar('${b.id}')">Marcar pagada</button>
-            <button onclick="anular('${b.id}')">Anular</button>
-        `;
+  if (filtro !== "TODAS") {
+    query = query.eq("estado", filtro);
+  }
 
-        div.appendChild(row);
-    });
+  const { data, error } = await query;
+
+  if (error) {
+    container.innerHTML = `<p>Error cargando boletas: ${error.message}</p>`;
+    return;
+  }
+
+  let html = `
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Estado</th>
+          <th>Comprador</th>
+          <th>Identificación</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+  `;
+
+  data.forEach(boleta => {
+    html += `
+      <tr>
+        <td>${boleta.numero_formateado}</td>
+        <td>${boleta.estado}</td>
+        <td>${boleta.comprador_nombre || "-"}</td>
+        <td>${boleta.comprador_identificacion || "-"}</td>
+        <td>
+          ${boleta.estado !== "PAGADA" ? `<button onclick="marcarComo('PAGADA', '${boleta.id}')">Pagar</button>` : ""}
+          ${boleta.estado !== "ANULADA" ? `<button onclick="marcarComo('ANULADA', '${boleta.id}')">Anular</button>` : ""}
+          ${boleta.estado !== "DISPONIBLE" ? `<button onclick="marcarComo('DISPONIBLE', '${boleta.id}')">Liberar</button>` : ""}
+        </td>
+      </tr>
+    `;
+  });
+
+  html += `</tbody></table>`;
+  container.innerHTML = html;
 }
 
-window.pagar = async function (id) {
-    await supabase.from("boletas").update({ estado: "PAGADA" }).eq("id", id);
-    cargarAdmin();
-};
+async function marcarComo(nuevoEstado, idBoleta) {
+  const confirmacion = confirm(`¿Estás seguro de cambiar el estado a ${nuevoEstado}?`);
+  if (!confirmacion) return;
 
-window.anular = async function (id) {
-    await supabase.from("boletas").update({ estado: "ANULADA" }).eq("id", id);
-    cargarAdmin();
-};
+  const { error } = await supabase
+    .from("boletas")
+    .update({ estado: nuevoEstado })
+    .eq("id", idBoleta);
 
-cargarAdmin();
+  if (error) {
+    alert("Error actualizando estado: " + error.message);
+  } else {
+    alert(`Estado cambiado a ${nuevoEstado}`);
+    cargarBoletas();
+  }
+}

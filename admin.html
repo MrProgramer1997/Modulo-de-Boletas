@@ -1,19 +1,31 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8" />
-    <title>Panel Admin</title>
-    <link rel="stylesheet" href="./css/styles.css" />
-</head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel de Administración - Rifa</title>
+  <link rel="stylesheet" href="css/styles.css">
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js" defer></script>
+  <script src="js/supabaseClient.js" defer></script>
+  <script src="js/config.js" defer></script>
+  <script src="js/admin.js" defer></script>
+</head>
 <body>
 
-<h1>Panel de administración</h1>
+  <header>
+    <h1>🛠️ Panel de Administración</h1>
+    <label for="filtro">Filtrar por estado:</label>
+    <select id="filtro">
+      <option value="TODAS">TODAS</option>
+      <option value="DISPONIBLE">DISPONIBLES</option>
+      <option value="RESERVADA">RESERVADAS</option>
+      <option value="PAGADA">PAGADAS</option>
+      <option value="ANULADA">ANULADAS</option>
+    </select>
+  </header>
 
-<div id="boletas-admin"></div>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-<script type="module" src="./js/admin.js"></script>
+  <section id="tabla-boletas" class="tabla-admin"></section>
 
 </body>
 </html>
