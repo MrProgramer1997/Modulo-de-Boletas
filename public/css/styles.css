@@ -1,0 +1,58 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 10px;
+}
+
+.boleta {
+    padding: 15px;
+    background: white;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.boleta.disponible {
+    border: 2px solid #28a745;
+}
+
+.boleta.reservada {
+    border: 2px solid orange;
+    background: #fff4e0;
+    cursor: not-allowed;
+}
+
+.boleta.pagada {
+    border: 2px solid #007bff;
+    background: #e7f0ff;
+    cursor: not-allowed;
+}
+
+.boleta.anulada {
+    border: 2px solid red;
+    background: #ffe5e5;
+    cursor: not-allowed;
+}
+
+.qr {
+    width: 100px;
+    margin-top: 8px;
+}
+
+.timer {
+    font-size: 12px;
+    color: #ff4444;
+    margin-top: 5px;
+}

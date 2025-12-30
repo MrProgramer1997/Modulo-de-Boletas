@@ -1,0 +1,3 @@
+// public/js/config.js
+export const SUPABASE_URL = "https://lhivknrcxaxxcahstafe.supabase.co";
+export const SUPABASE_PUBLIC_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxoaXZrbnJjeGF4eGNhaHN0YWZlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjcwMjc3ODEsImV4cCI6MjA4MjYwMzc4MX0.OzSH0a49KHyX78zSnfUjlmN-_NZ4XB5VVFq4q5qf0zo";

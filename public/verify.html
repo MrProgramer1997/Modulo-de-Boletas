@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Rifa - Compra de Boletas</title>
+    <link rel="stylesheet" href="css/styles.css">
+
+    <script src="js/supabaseClient.js" defer></script>
+    <script src="js/config.js" defer></script>
+    <script src="js/app.js" defer></script>
+
+    <!-- Librería QR -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+</head>
+
+
+<body>
+
+    <h1>Verificar boleta</h1>
+
+    <input type="number" id="num" placeholder="Número de boleta" />
+    <button onclick="verificar()">Consultar</button>
+
+    <div id="resultado"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script type="module" src="./js/verify.js"></script>
+
+</body>
+
+</html>
